@@ -125,7 +125,7 @@ public class ScrollingUtil {
             int firstChildTop = 0;
             if (recyclerView.getChildCount() > 0) {
                 // 处理item高度超过一屏幕时的情况
-                View firstVisibleChild = recyclerView.getChildAt(0);
+                View firstVisibleChild = recyclerView.getLayoutManager().getChildAt(0);
                 if (firstVisibleChild != null && firstVisibleChild.getMeasuredHeight() >= recyclerView.getMeasuredHeight()) {
                     if (android.os.Build.VERSION.SDK_INT < 14) {
                         return !(ViewCompat.canScrollVertically(recyclerView, -1) || recyclerView.getScrollY() > 0);
@@ -137,7 +137,7 @@ public class ScrollingUtil {
                 // 如果RecyclerView的子控件数量不为0，获取第一个子控件的top
 
                 // 解决item的topMargin不为0时不能触发下拉刷新
-                View firstChild = recyclerView.getChildAt(0);
+                View firstChild = recyclerView.getLayoutManager().getChildAt(0);
                 RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) firstChild.getLayoutParams();
                 firstChildTop = firstChild.getTop() - layoutParams.topMargin - getRecyclerViewItemTopInset(layoutParams) - recyclerView.getPaddingTop();
             }
@@ -215,7 +215,7 @@ public class ScrollingUtil {
 
             if (manager instanceof LinearLayoutManager) {
                 // 处理item高度超过一屏幕时的情况
-                View lastVisibleChild = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+                View lastVisibleChild = recyclerView.getLayoutManager().getChildAt(recyclerView.getChildCount() - 1);
                 if (lastVisibleChild != null && lastVisibleChild.getMeasuredHeight() >= recyclerView.getMeasuredHeight()) {
                     if (android.os.Build.VERSION.SDK_INT < 14) {
                         return !(ViewCompat.canScrollVertically(recyclerView, 1) || recyclerView.getScrollY() < 0);
